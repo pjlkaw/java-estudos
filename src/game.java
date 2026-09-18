@@ -31,7 +31,6 @@ public class game {
                 System.out.println(String.format("STATS \n Vida: %d Estado: %s",player.vida, playerEstado));
             }
 
-                    
             playersArray.add(player);
             System.out.println(playersArray);
 

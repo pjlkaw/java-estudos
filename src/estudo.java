@@ -1,4 +1,4 @@
-public class App {
+public class estudo {
     public static void main(String[] args) throws Exception {
         Boolean ativo = false;
         String mensagemFalse = "não ta";

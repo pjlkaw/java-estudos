@@ -21,9 +21,40 @@ public class App {
         }
 
         System.out.println(retornaconta(1, 2));
+
+        // Execução de Classes
+        int id = 1;
+        String nome = "Pedro";
+        int vida = 100;
+        boolean vivo = true; 
+
+        String statusUserTexto;
+
+        Player user = criaPlayer(id, nome, vida, vivo);
+        if (user.vivo) {
+            statusUserTexto = "vivo";
+        }
+        else {
+            statusUserTexto = "morto";
+        }
+        System.out.println(String.format("O nome do novo usuário é: %s e está %s", user.nome, statusUserTexto ));
     }
 
     // Funções
+    static Player criaPlayer(int id, String nome, int vida, boolean vivo ) {
+        Player user = new Player();
+        user.id = id;
+        user.nome = nome;
+        user.vida = vida;
+        if (vida == 0) {
+            user.vivo = false;
+        }
+        else {
+            user.vivo = true;
+        }
+        return user;
+    }
+
     static void mensagem(String msg) {
         String mensagemTrue = msg;
         System.out.println(mensagemTrue);

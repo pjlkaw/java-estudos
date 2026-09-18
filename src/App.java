@@ -1,11 +1,16 @@
 public class App {
     public static void main(String[] args) throws Exception {
         Boolean ativo = false;
-        
         String mensagemFalse = "não ta";
 
         for ( int i = 0; i<=5; i++) {
-            System.out.println(mensagemFalse);
+            if (i % 2 == 0) {
+                System.out.println(String.format("%s oi", mensagemFalse) );
+            }
+            if (i % 2 == 1) {
+                System.out.println(String.format("%s tchau", mensagemFalse) );
+            }
+
             if (i == 5) {
                 ativo = true;
             }
@@ -18,6 +23,7 @@ public class App {
         System.out.println(retornaconta(1, 2));
     }
 
+    // Funções
     static void mensagem(String msg) {
         String mensagemTrue = msg;
         System.out.println(mensagemTrue);

@@ -13,7 +13,10 @@ public class game {
             System.out.println("1 - Criar player");
             System.out.println("2 - Ver ultimo player criado");
             System.out.println("3 - Listar players");
-            System.out.println("4 - Criar monstro\n");
+            System.out.println("4 - Criar monstro");
+            System.out.println("5 - COMBATE!!!");
+            System.out.println("------");
+            System.out.println("6 - sair\n");
 
             System.out.print("Escolha: ");
             int opcao = teclado.nextInt();
@@ -76,7 +79,7 @@ public class game {
                             "Um monstro apareceu!\n%s - %dHP", nomeMonstro, vidaMonstro
                         ));
 
-                        System.out.println("Orda de Monstros");
+                        System.out.println("\nOrda de Monstros");
                         for ( int i = 0; i < monstersArray.size(); i++) {
                             System.out.println(String.format("[%d] %s - %d HP",i+1, monstersArray.get(i).nome, vidaMonstro));
                         }
@@ -86,10 +89,23 @@ public class game {
                         System.out.println("===== COMBATE =====");
                         if (playersArray.isEmpty()) {
                             System.out.println("Nenhum player disponível para combate!");
-                        } else {
-                            // Passamos o seu array como argumento para a função ler
-                            listaPlayers(playersArray); 
+                            break;
+                        } else if (monstersArray.isEmpty()) {
+                            System.out.println("Nenhum mosntro pelas redondezas!");
+                            break;
                         }
+                        // Escolhe o Player
+                        listaPlayers(playersArray);
+
+                        System.out.print("Escolha o player para a batalha:");
+                        Player playerEscolhido = playersArray.get(
+                            teclado.nextInt() - 1
+                        );
+                        // Define o primeiro monstro do array
+                        Monster monstroEscolhido = monstersArray.get(0); 
+
+                        combate(playerEscolhido, monstroEscolhido);
+                        
 
                     break;
                 
@@ -101,11 +117,12 @@ public class game {
 
     }
 
-    // public void combate(Player player, Monster monstro) {
-
-    // }
+    public static void combate(Player player, Monster monstro) {
+        System.out.println(String.format("HP - %d %s X %s %d - HP", player.vida, player.nome, monstro.nome, monstro.vida));
+    }
     
     public static void listaPlayers(ArrayList<Player> lista) {
+        System.out.println("Players:");
         for (int i = 0; i < lista.size(); i++) {
             System.out.print(i + 1);
             System.out.println(String.format(" - %s", lista.get(i).nome));

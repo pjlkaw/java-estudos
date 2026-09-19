@@ -1,6 +1,6 @@
 public class Monster {
     int id;
-    String nome = "Esqueleto";
+    String nome;
     int vida = 30;
     boolean vivo; 
 }

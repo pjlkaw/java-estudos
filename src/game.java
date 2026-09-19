@@ -5,24 +5,25 @@ public class game {
     public static void main(String[] args) throws Exception {
         Scanner teclado = new Scanner(System.in);
         ArrayList<Player> playersArray = new ArrayList<>(); 
+        ArrayList<Monster> monstersArray = new ArrayList<>(); 
 
-        
         while (true) {
 
-            System.out.println("===== GAME =====");
+            System.out.println("\n===== GAME =====");
             System.out.println("1 - Criar player");
-            System.out.println("2 - Listar players");
-            System.out.println("3 - Ver player");
-            System.out.println("4 - Sair");
+            System.out.println("2 - Ver ultimo player criado");
+            System.out.println("3 - Listar players");
+            System.out.println("4 - Criar monstro\n");
 
             System.out.print("Escolha: ");
             int opcao = teclado.nextInt();
             teclado.nextLine();
 
             switch (opcao) {
+                // Adiciona Player
                 case 1:
                     Player player = new Player();
-                    player.vida = 0;
+                    player.vida = 100;
             
                     System.out.print("Nome do player: ");
                     String nome = teclado.nextLine();
@@ -42,14 +43,48 @@ public class game {
                     }
 
                     playersArray.add(player);
-                    System.out.println(playersArray);
-
-                    Player playerAtual = playersArray.get(0);
-                    System.out.println(playerAtual.nome);
-                    
 
                     break;
-            
+                    // Exibe Player
+                    case 2 :
+                        System.out.println(playersArray);
+
+                        int ultimoIndex = playersArray.size() - 1;
+
+                        Player playerAtual = playersArray.get(ultimoIndex);
+                        System.out.println(playerAtual.nome);
+
+                    break;
+
+                    // Listar Players
+                    case 3:
+                        for (int i = 0; i < playersArray.size(); i++) {
+                            System.out.print(playersArray.get(i).id + 1);
+                            System.out.println(String.format( " - %s", playersArray.get(i).nome));
+                        }
+                    break;
+
+                    // Criar Monstro
+                    case 4:
+                        Monster monstro = new Monster();
+                        System.out.print("Nome do monstro: ");
+                        monstro.nome = teclado.nextLine();
+
+                        monstersArray.add(monstro);
+
+                        String nomeMonstro = monstersArray.get(monstersArray.size() - 1).nome;
+                        int vidaMonstro = monstersArray.get(monstersArray.size() - 1).vida;
+
+                        System.out.println(String.format(
+                            "Um monstro apareceu!\n%s - %dHP", nomeMonstro, vidaMonstro
+                        ));
+
+                        System.out.println("Orda de Monstros");
+                        for ( int i = 0; i < monstersArray.size(); i++) {
+                            System.out.println(String.format("[%d] %s - %d HP",i+1, monstersArray.get(i).nome, vidaMonstro));
+                        }
+                    break;
+                
                 default:
                     teclado.close();
                     break;

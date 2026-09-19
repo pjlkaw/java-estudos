@@ -58,10 +58,7 @@ public class game {
 
                     // Listar Players
                     case 3:
-                        for (int i = 0; i < playersArray.size(); i++) {
-                            System.out.print(playersArray.get(i).id + 1);
-                            System.out.println(String.format( " - %s", playersArray.get(i).nome));
-                        }
+                        listaPlayers(playersArray);
                     break;
 
                     // Criar Monstro
@@ -84,11 +81,34 @@ public class game {
                             System.out.println(String.format("[%d] %s - %d HP",i+1, monstersArray.get(i).nome, vidaMonstro));
                         }
                     break;
+
+                    case 5 :
+                        System.out.println("===== COMBATE =====");
+                        if (playersArray.isEmpty()) {
+                            System.out.println("Nenhum player disponível para combate!");
+                        } else {
+                            // Passamos o seu array como argumento para a função ler
+                            listaPlayers(playersArray); 
+                        }
+
+                    break;
                 
                 default:
                     teclado.close();
                     break;
             }
+        }
+
+    }
+
+    // public void combate(Player player, Monster monstro) {
+
+    // }
+    
+    public static void listaPlayers(ArrayList<Player> lista) {
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.print(i + 1);
+            System.out.println(String.format(" - %s", lista.get(i).nome));
         }
     }
 }

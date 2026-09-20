@@ -7,6 +7,16 @@ public class game {
         ArrayList<Player> playersArray = new ArrayList<>(); 
         ArrayList<Monster> monstersArray = new ArrayList<>(); 
 
+        Player playerPadrao = new Player();
+        playerPadrao.nome = "kaw";
+        playerPadrao.vida = 100;
+        playersArray.add(playerPadrao);
+        Monster monstroPadrao = new Monster();
+        monstroPadrao.nome = "Esqueleto";
+        monstroPadrao.vida = 50;
+        monstersArray.add(monstroPadrao);
+
+
         while (true) {
 
             System.out.println("\n===== GAME =====");
@@ -97,14 +107,15 @@ public class game {
                         // Escolhe o Player
                         listaPlayers(playersArray);
 
-                        System.out.print("Escolha o player para a batalha:");
+                        System.out.print("Escolha o player para a batalha: ");
                         Player playerEscolhido = playersArray.get(
                             teclado.nextInt() - 1
                         );
-                        // Define o primeiro monstro do array
-                        Monster monstroEscolhido = monstersArray.get(0); 
 
-                        combate(playerEscolhido, monstroEscolhido);
+                        while (!monstersArray.isEmpty()) {
+                            Monster monstroAtual = monstersArray.get(0);
+                            combate(playerEscolhido, monstroAtual, monstersArray);
+                        }
                         
 
                     break;
@@ -117,8 +128,35 @@ public class game {
 
     }
 
-    public static void combate(Player player, Monster monstro) {
-        System.out.println(String.format("HP - %d %s X %s %d - HP", player.vida, player.nome, monstro.nome, monstro.vida));
+    public static void combate(Player player, Monster monstro, ArrayList<Monster> monstersArray) {
+        System.out.println(String.format("\nHP - %d %s X %s %d - HP", player.vida, player.nome, monstro.nome, monstro.vida));
+
+        int vidaAtualMonstro = monstro.vida;
+        int danoPlayer = player.dano;
+
+        for (int i = 1; vidaAtualMonstro > 0; i++) {
+            System.out.println(String.format("\nTurno %d", i));
+            vidaAtualMonstro = vidaAtualMonstro - danoPlayer;
+
+            if (vidaAtualMonstro < 0) {
+                vidaAtualMonstro = 0;
+                System.out.println(String.format("%s causou %d de dano!", player.nome, danoPlayer));
+                System.out.println(String.format("Vida atual do %s: %d (X_X)", monstro.nome, vidaAtualMonstro));
+                monstro.vida = vidaAtualMonstro;
+
+                monstersArray.remove(monstro);
+            }
+            else {
+                System.out.println(String.format("%s causou %d de dano!", player.nome, danoPlayer));
+                System.out.println(String.format("Vida atual do %s: %d", monstro.nome, vidaAtualMonstro));
+                monstro.vida = vidaAtualMonstro;
+            }
+        }
+
+
+
+
+        
     }
     
     public static void listaPlayers(ArrayList<Player> lista) {

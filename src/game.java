@@ -59,44 +59,47 @@ public class game {
 
                     break;
                     // Exibe Player
-                    case 2 :
-                        System.out.println(playersArray);
+                case 2:
+                    System.out.println(playersArray);
 
-                        int ultimoIndex = playersArray.size() - 1;
+                    int ultimoIndex = playersArray.size() - 1;
 
-                        Player playerAtual = playersArray.get(ultimoIndex);
-                        System.out.println(playerAtual.nome);
+                    Player playerAtual = playersArray.get(ultimoIndex);
+                    System.out.println(playerAtual.nome);
 
-                    break;
+                break;
 
-                    // Listar Players
-                    case 3:
-                        listaPlayers(playersArray);
-                    break;
+                // Listar Players
+                case 3:
+                    listaPlayers(playersArray);
+                break;
 
-                    // Criar Monstro
-                    case 4:
-                        Monster monstro = new Monster();
-                        System.out.print("Nome do monstro: ");
-                        monstro.nome = teclado.nextLine();
+                // Criar Monstro
+                case 4:
+                    Monster monstro = new Monster();
+                    System.out.print("Nome do monstro: ");
+                    monstro.nome = teclado.nextLine();
 
-                        monstersArray.add(monstro);
+                    monstersArray.add(monstro);
 
-                        String nomeMonstro = monstersArray.get(monstersArray.size() - 1).nome;
-                        int vidaMonstro = monstersArray.get(monstersArray.size() - 1).vida;
+                    String nomeMonstro = monstersArray.get(monstersArray.size() - 1).nome;
+                    int vidaMonstro = monstersArray.get(monstersArray.size() - 1).vida;
 
-                        System.out.println(String.format(
-                            "Um monstro apareceu!\n%s - %dHP", nomeMonstro, vidaMonstro
-                        ));
+                    System.out.println(String.format(
+                        "Um monstro apareceu!\n%s - %dHP", nomeMonstro, vidaMonstro
+                    ));
 
-                        System.out.println("\nOrda de Monstros");
-                        for ( int i = 0; i < monstersArray.size(); i++) {
-                            System.out.println(String.format("[%d] %s - %d HP",i+1, monstersArray.get(i).nome, vidaMonstro));
-                        }
-                    break;
+                    System.out.println("\nOrda de Monstros");
+                    for ( int i = 0; i < monstersArray.size(); i++) {
+                        System.out.println(String.format("[%d] %s - %d HP",i+1, monstersArray.get(i).nome, vidaMonstro));
+                    }
+                break;
 
-                    case 5 :
-                        System.out.println("===== COMBATE =====");
+                case 5:
+                        System.out.println("\n========================================"); 
+                        System.out.println(" COMBATE"); 
+                        System.out.println("========================================");
+
                         if (playersArray.isEmpty()) {
                             System.out.println("Nenhum player disponível para combate!");
                             break;
@@ -114,7 +117,12 @@ public class game {
 
                         while (!monstersArray.isEmpty()) {
                             Monster monstroAtual = monstersArray.get(0);
-                            combate(playerEscolhido, monstroAtual, monstersArray);
+                            boolean playerVivo = combate(playerEscolhido, monstroAtual, monstersArray);
+                        
+                            if (!playerVivo) {
+                                System.out.println("Fim de Jogo para o Player");
+                                break;
+                            }
                         }
                         
 
@@ -128,35 +136,59 @@ public class game {
 
     }
 
-    public static void combate(Player player, Monster monstro, ArrayList<Monster> monstersArray) {
-        System.out.println(String.format("\nHP - %d %s X %s %d - HP", player.vida, player.nome, monstro.nome, monstro.vida));
+    public static boolean combate(Player player, Monster monstro, ArrayList<Monster> monstersArray) {
+        System.out.println("----------------------------------------");
+        System.out.println(String.format( "%s %d HP VS %s %d HP", player.nome, player.vida, monstro.nome, monstro.vida )); 
+        System.out.println("----------------------------------------");
 
         int vidaAtualMonstro = monstro.vida;
+        int danoMonstro = monstro.dano;
+        int vidaAtualplayer = player.vida;
         int danoPlayer = player.dano;
 
         for (int i = 1; vidaAtualMonstro > 0; i++) {
-            System.out.println(String.format("\nTurno %d", i));
+            System.out.println(String.format("\nTURNO %d", i));
+            System.out.println("----------------------------------------");
             vidaAtualMonstro = vidaAtualMonstro - danoPlayer;
 
-            if (vidaAtualMonstro < 0) {
+            if (vidaAtualMonstro <= 0) {
+                // Ataque Monstro
                 vidaAtualMonstro = 0;
                 System.out.println(String.format("%s causou %d de dano!", player.nome, danoPlayer));
-                System.out.println(String.format("Vida atual do %s: %d (X_X)", monstro.nome, vidaAtualMonstro));
+                System.out.println(String.format("\nVida atual do %s: %d (X_X)", monstro.nome, vidaAtualMonstro));
                 monstro.vida = vidaAtualMonstro;
-
+                // Elimina o monstro da memória
                 monstersArray.remove(monstro);
+
+                vidaAtualplayer = vidaAtualplayer + 10;
+                player.vida = vidaAtualplayer;
+                System.out.println(String.format("O player ganhou 10HP: %s - %d HP", player.nome, vidaAtualplayer));
+                return true;
             }
             else {
                 System.out.println(String.format("%s causou %d de dano!", player.nome, danoPlayer));
-                System.out.println(String.format("Vida atual do %s: %d", monstro.nome, vidaAtualMonstro));
+                System.out.println(String.format("\nVida atual do %s: %d", monstro.nome, vidaAtualMonstro));
+
+                // Contra-ataque do Monstro
+                vidaAtualplayer = vidaAtualplayer - danoMonstro;
+
+                System.out.println(String.format("%s causou %d de dano!", monstro.nome, danoMonstro));
+                System.out.println(String.format("\nVida atual do %s: %d", player.nome, vidaAtualplayer));
+
+                if (vidaAtualplayer <= 0) {
+                    vidaAtualplayer = 0;
+                    player.vida = vidaAtualplayer;
+                    System.out.println(String.format("%s morreu!", player.nome));
+
+                    return false;
+                }
+
                 monstro.vida = vidaAtualMonstro;
+                player.vida = vidaAtualplayer;
+
             }
         }
-
-
-
-
-        
+        return true;
     }
     
     public static void listaPlayers(ArrayList<Player> lista) {

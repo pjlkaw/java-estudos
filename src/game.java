@@ -115,17 +115,24 @@ public class game {
                             teclado.nextInt() - 1
                         );
 
+                        // Escolhe arma
+                        System.out.println("Escolha a arma do player: ");
+                        for ( int i = 0; i<playerEscolhido.arma.length ; i++) {
+                            System.out.println(String.format("%d - %s", i+1, playerEscolhido.arma[i]));
+                        }
+                        int armaEscolha = teclado.nextInt();
+                        String playerArmaEscolhida = playerEscolhido.arma[armaEscolha-1];
+
+
                         while (!monstersArray.isEmpty()) {
                             Monster monstroAtual = monstersArray.get(0);
-                            boolean playerVivo = combate(playerEscolhido, monstroAtual, monstersArray);
+                            boolean playerVivo = combate(playerEscolhido, playerArmaEscolhida, monstroAtual, monstersArray);
                         
                             if (!playerVivo) {
                                 System.out.println("Fim de Jogo para o Player");
                                 break;
                             }
                         }
-                        
-
                     break;
                 
                 default:
@@ -136,7 +143,7 @@ public class game {
 
     }
 
-    public static boolean combate(Player player, Monster monstro, ArrayList<Monster> monstersArray) {
+    public static boolean combate(Player player,String playerArmaEscolhida, Monster monstro, ArrayList<Monster> monstersArray) {
         System.out.println("----------------------------------------");
         System.out.println(String.format( "%s %d HP VS %s %d HP", player.nome, player.vida, monstro.nome, monstro.vida )); 
         System.out.println("----------------------------------------");
@@ -145,6 +152,14 @@ public class game {
         int danoMonstro = monstro.dano;
         int vidaAtualplayer = player.vida;
         int danoPlayer = player.dano;
+        if(playerArmaEscolhida == "Espada"){
+            danoPlayer = danoPlayer + 10;
+        } else if (playerArmaEscolhida == "Maça") {
+            danoPlayer = danoPlayer + 20;
+        } else {
+            danoPlayer = danoPlayer + 15;
+        }
+ 
 
         for (int i = 1; vidaAtualMonstro > 0; i++) {
             System.out.println(String.format("\nTURNO %d", i));

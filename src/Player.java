@@ -3,5 +3,6 @@ public class Player {
     String nome;
     int dano = 20;
     int vida;
+    String[] arma = {"Punhos", "Espada", "Maça", "Lança"};
     boolean vivo;
 }

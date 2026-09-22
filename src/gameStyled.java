@@ -1,3 +1,4 @@
+// Versão Estilizada com IA
 import java.util.Scanner;
 import java.util.ArrayList;
 

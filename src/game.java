@@ -1,3 +1,6 @@
+// Versão original de estudo e aprendizado
+// Todas as linhas escritas por mim para fortalecer lógica de programação
+// O tempo que levou toda esse aprendizado em Java foi de apenas 3 Dias
 import java.util.Scanner;
 import java.util.ArrayList; 
 

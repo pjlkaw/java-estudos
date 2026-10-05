@@ -25,14 +25,18 @@ public static void main(String[] args) throws Exception {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
         
+        ObjectMapper objectMapper = new ObjectMapper();
         JsonNode data = objectMapper.readTree(response.body());
-        String jsonFormatado = writer.writeValueAsString(data);
-        System.out.println(jsonFormatado);
+        // ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
+        // String jsonFormatado = writer.writeValueAsString(data);
+        // System.out.println(jsonFormatado);
 
-        System.out.println(data.get(0).get("actor").get("login"));
+        System.out.println("Repositório: " + data.get(0).get("repo").get("name"));
+        System.out.println("Eventos encontrados: " + data.size()); 
+        System.out.println("Usuário: " + data.get(0).get("actor").get("login")); 
+        System.out.println("ID: " + data.get(0).get("id")); 
+        System.out.println("Data: " + data.get(0).get("created_at")); 
     }
 
 }

@@ -28,15 +28,18 @@ public static void main(String[] args) throws Exception {
         
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode data = objectMapper.readTree(response.body());
-        // ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
-        // String jsonFormatado = writer.writeValueAsString(data);
-        // System.out.println(jsonFormatado);
+        ObjectWriter writer = objectMapper.writerWithDefaultPrettyPrinter();
+        String jsonFormatado = writer.writeValueAsString(data);
+        System.out.println(jsonFormatado);
 
-        System.out.println("Repositório: " + data.get(0).get("repo").get("name"));
-        System.out.println("Eventos encontrados: " + data.size()); 
-        System.out.println("Usuário: " + data.get(0).get("actor").get("login")); 
-        System.out.println("ID: " + data.get(0).get("id")); 
-        System.out.println("Data: " + data.get(0).get("created_at")); 
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println("Repositório: " + data.get(i).get("repo").get("name"));
+            System.out.println("Eventos encontrados: " + data.size()); 
+            System.out.println("Usuário: " + data.get(i).get("actor").get("login")); 
+            System.out.println("ID: " + data.get(i).get("id")); 
+            System.out.println("Data: " + data.get(i).get("created_at")); 
+            System.out.println("-------------------------\n");
+        }
     }
 
 }

@@ -32,9 +32,9 @@ public class App {
             String url = data.get(i).get("show").get("url").asText();
             
             Show show = new Show(name, summary, url);
-            System.out.println(show.name);
-            System.out.println(show.summary);
-            System.out.println(show.url);
+
+            System.out.println(show.name + "\n" + show.summary + "\n" + show.url);
+                
             System.out.println("---------------------------------------------------\n");
         }
         
